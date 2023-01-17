@@ -23,20 +23,9 @@ async function ConnectToPostgres() {
         })
     return sequelize;
 }
-async function test() {
-    try {
-        let connected = await ConnectToPostgres();
-        return connected;
 
-    }
-    catch (e) {
-        console.log("something went wrong");
-    }
-}
 
 app.listen(process.env.PORT || 4500, async () => {
-    sequelize = await test();
+    sequelize = await ConnectToPostgres();
     console.log("working")
-
-
 })
