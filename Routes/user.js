@@ -14,5 +14,17 @@ module.exports = (sequelize) => {
             return next(err)
         }
     })
+
+    router.get("/testFromUrl", (req, res, next) => {
+
+        //if we use formidable, we use fields for every content-type
+        // const { name, age } = req.fields;
+
+        const { name, age } = req.body;
+        res.status(200).send(name);
+
+
+
+    })
     return router;
 }
