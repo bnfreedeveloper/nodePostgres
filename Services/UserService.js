@@ -24,7 +24,7 @@ class UserService {
     }
     async getAllUsers() {
         try {
-            return this.models.user.findAll({})
+            return await this.models.user.findAll({})
         } catch (e) {
             throw new Error(e);
         }
