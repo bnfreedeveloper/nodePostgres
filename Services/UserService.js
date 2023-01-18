@@ -1,4 +1,5 @@
 const Models = require("../Models/models")
+require("sequelize");
 
 class UserService {
     constructor(sequelize) {
@@ -6,8 +7,35 @@ class UserService {
         this.client = sequelize;
         this.models = sequelize.models;
     }
-    async getUsers() {
-        return "custom list of users"
+    async createUser({ firstName, lastName, email, password }) {
+        try {
+            const user = await this.models.user.create({
+                firstName,
+                lastName,
+                email,
+                password
+            })
+            console.log(user)
+            return user;
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+    async getAllUsers() {
+        try {
+            return this.models.user.findAll({})
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+    async getUser(id) {
+        try {
+            return await this.models.user.findByPk(id);
+        }
+        catch (e) {
+            throw new Error(e);
+        }
     }
 }
 

@@ -45,7 +45,7 @@ app.use("/Users", UserRouter(sequelize));
 //error handling middleware
 
 app.use((err, req, res, next) => {
-    res.status(500).send(err)
+    res.status(500).send(err.message)
 })
 
 
