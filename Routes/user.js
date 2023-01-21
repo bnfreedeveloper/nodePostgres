@@ -46,5 +46,32 @@ module.exports = (sequelize) => {
         const { name, age } = req.body;
         res.status(200).send(name);
     })
+
+    // get infos with only some specific attribute
+    router.get("/specific/infos", async (req, res, next) => {
+        const infos = req.body;
+        //we take care of all attibutes of the models, so the client will send everything
+        const infosRequested = Object.entries(infos).filter(([x, value]) => value == true);
+        const objectInfosReq = Object.fromEntries(infosRequested);
+        try {
+            const result = await userManagement.getSpecificInfos(objectInfosReq);
+            return res.status(200).json(result);
+        }
+        catch (e) {
+            return next(e.message)
+        }
+    })
+    //delete user
+    router.delete("/:id", async (req, res, next) => {
+        try {
+            await userManagement.deleteUser(req.params.id);
+            res.status(200).redirect("/users")
+        }
+        catch (e) {
+            return next(e.message)
+        }
+    })
+
+
     return router;
 }

@@ -37,6 +37,15 @@ class UserService {
             throw new Error(e);
         }
     }
+    async getSpecificInfos(infosObject) {
+        let infos = Object.keys(infosObject);
+        return await this.models.user.findAll({
+            attributes: [...infos]
+        });
+    }
+    async deleteUser(id) {
+        return await this.models.user.destroy({ where: { id: id } })
+    }
 }
 
 module.exports = UserService;
